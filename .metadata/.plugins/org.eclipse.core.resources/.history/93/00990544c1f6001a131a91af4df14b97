@@ -1,0 +1,16 @@
+package br.ce.wcaquino.rest.tests;
+
+import static io.restassured.RestAssured.given;
+
+public class BarrigaTest {
+	
+	public void naoDeveAcessarAPISemToken() {
+		given()
+		.when()
+			.get("/contas")
+		.then()
+			.statusCode(401)
+		;
+	}
+
+}

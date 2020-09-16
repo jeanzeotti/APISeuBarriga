@@ -1,0 +1,47 @@
+package br.ce.wcaquino.rest;
+
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.*;
+
+
+import org.junit.jupiter.api.Test;
+
+
+
+public class AuthTest {
+	
+	@Test
+	public void deveAcessarSWAPI() {
+		given()
+			.log().all()
+		.when()
+			.get("https://swapi.dev/api/people/1")
+		.then()
+			.log().all()
+			.statusCode(200)
+			.body("name", is("Luke Skywalker"))
+		;
+	}
+
+//	1dc0fdc3b369e59b5c3a16a99db58173
+//	http://api.openweathermap.org/data/2.5/weather?q=Fortaleza,BR&appid=1dc0fdc3b369e59b5c3a16a99db58173&units=metric
+	
+	@Test
+	public void deveObterClima() {
+		given()
+			.log().all()
+			.queryParam("q", "Fortaleza,BR")
+			.queryParam("appid","1dc0fdc3b369e59b5c3a16a99db58173" )
+			.queryParam("units", "metric")
+		.when()
+			.get("http://api.openweathermap.org/data/2.5/weather")
+		.then()
+			.log().all()
+			.statusCode(200)
+			.body("name", is("Fortaleza"))
+			.body("coord.lon", is(-38.52f))
+			.body("main.temp", is(greaterThan(25f)))
+		;
+	}
+	
+}

@@ -1,0 +1,18 @@
+package br.ce.wcaquino.rest.tests;
+
+import static io.restassured.RestAssured.given;
+
+import br.ce.wcaquino.rest.core.BaseTest;
+
+public class BarrigaTest extends BaseTest {
+	
+	public void naoDeveAcessarAPISemToken() {
+		given()
+		.when()
+			.get("/contas")
+		.then()
+			.statusCode(401)
+		;
+	}
+
+}
